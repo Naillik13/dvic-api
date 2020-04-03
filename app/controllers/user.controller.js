@@ -1,4 +1,6 @@
 const User = require('../models/user.model.js');
+const jwt = require('jsonwebtoken');
+const UserService = require('../services/user.service');
 const bcrypt = require('bcrypt');
 
 // Create and Save a new User
@@ -22,11 +24,13 @@ exports.create = (req, res) => {
         });
     }
     bcrypt.hash(req.body.password, 10).then((passwordHash) => {
+        let newUserIsAdmin = isAdminRequest(req);
+
         // Create a User
         const user = new User({
             email: req.body.email,
             password: passwordHash,
-            admin: req.body.admin ? req.body.admin : false
+            admin: newUserIsAdmin
         });
 
         // Save User in the database
@@ -101,4 +105,19 @@ exports.delete = (req, res) => {
             message: "Could not delete user with id " + req.params.userId
         });
     });
+};
+
+isAdminRequest = (req) => {
+    if (typeof req.headers.authorization !== "undefined") {
+        let token = req.headers.authorization.split(" ")[1];
+
+        jwt.verify(token, privateKey, { algorithm: "HS256" }, (err, user) => {
+            if (err) {
+                return false;
+            }
+            return UserService.isAdminWithEmail(user.email);
+        });
+    } else {
+        return false;
+    }
 };
