@@ -1,0 +1,19 @@
+{
+  "name": "dvic-api",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "scripts": {
+    "preinstall": "openssl genrsa -out private.pem 2048",
+    "start": "node server.js"
+  },
+  "author": "naillik",
+  "license": "MIT",
+  "dependencies": {
+    "bcrypt": "^3.0.7",
+    "body-parser": "^1.19.0",
+    "express": "^4.17.1",
+    "jsonwebtoken": "^8.5.1",
+    "mongoose": "^5.7.12"
+  }
+}
