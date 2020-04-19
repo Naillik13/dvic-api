@@ -23,3 +23,13 @@ exports.isAdminOrSameUser = async (email, id) => {
         throw e
     })
 };
+
+exports.updateUserCompany = async (userId, companyId) =>  {
+    return await User.findByIdAndUpdate(userId, {
+        company: companyId
+    }, {new: true}).then(user => {
+        return user;
+    }).catch(_ => {
+        return false
+    });
+};
