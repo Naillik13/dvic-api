@@ -55,11 +55,11 @@ exports.create = (req, res) => {
 
 // Retrieve and return all places from the database.
 exports.findAll = (req, res) => {
-    User.find().then(places => {
-        res.send(places);
+    User.find().then(users => {
+        res.send(users);
     }).catch(err => {
         res.status(500).send({
-            message: err.message || "Some error occurred while retrieving places."
+            message: err.message || "Some error occurred while retrieving users."
         });
     });
 };
