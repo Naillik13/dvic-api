@@ -83,6 +83,26 @@ exports.findAll = (req, res) => {
     });
 };
 
+exports.findOne = (req, res) => {
+    Company.findById(req.params.companyId).then(company => {
+        if(!company) {
+            return res.status(404).send({
+                message: "Company not found with id " + req.params.companyId
+            });
+        }
+        res.status(200).send(company);
+    }).catch(err => {
+        if(err.kind === 'ObjectId') {
+            return res.status(404).send({
+                message: "Company not found with id " + req.params.companyId
+            });
+        }
+        return res.status(500).send({
+            message: "Error retrieving company with id " + req.params.companyId
+        });
+    });
+};
+
 exports.delete = (req, res) => {
     Company.findByIdAndRemove(req.params.companyId)
         .then(company => {

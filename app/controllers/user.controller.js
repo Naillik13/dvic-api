@@ -1,4 +1,5 @@
 const User = require('../models/user.model.js');
+const Company = require('../models/company.model');
 const jwt = require('jsonwebtoken');
 const UserService = require('../services/user.service');
 const bcrypt = require('bcrypt');
@@ -73,6 +74,43 @@ exports.findOne = (req, res) => {
             });
         }
         res.status(200).send(user);
+    }).catch(err => {
+        if(err.kind === 'ObjectId') {
+            return res.status(404).send({
+                message: "User not found with id " + req.params.userId
+            });
+        }
+        return res.status(500).send({
+            message: "Error retrieving user with id " + req.params.userId
+        });
+    });
+};
+
+// Find a single user with a userId
+exports.findCompany = (req, res) => {
+    User.findById(req.params.userId).then(user => {
+        if(!user) {
+            return res.status(404).send({
+                message: "User not found with id " + req.params.userId
+            });
+        }
+        Company.findById(user.company).then(company => {
+            if(!user) {
+                return res.status(404).send({
+                    message: "Company not found for user " + req.params.userId
+                });
+            }
+            res.status(200).send(company);
+        }).catch(err => {
+            if(err.kind === 'ObjectId') {
+                return res.status(404).send({
+                    message: "Company not found for user " + req.params.userId
+                });
+            }
+            return res.status(500).send({
+                message: "Error retrieving company for user " + req.params.userId
+            });
+        })
     }).catch(err => {
         if(err.kind === 'ObjectId') {
             return res.status(404).send({

@@ -4,8 +4,8 @@ module.exports = (router) => {
     router.post('/companies', companies.create);
 
     router.get('/companies', companies.findAll);
-    //
-    // router.get('/companies/:companyId', companies.findOne);
-    //
+
+    router.get('/companies/:companyId', companies.findOne);
+
     router.delete('/companies/:companyId', companies.delete);
 };

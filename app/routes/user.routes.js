@@ -8,7 +8,10 @@ module.exports = (router) => {
     router.get('/users', users.findAll);
 
     // Retrieve a single User with userId
-    router.get('/users/:userId', users.findOne);
+    router.get('/users/:userId', authentication.isAuthenticated, users.findOne);
+
+    // Retrieve a User Company with userId
+    router.get('/users/:userId/company', authentication.isAuthenticated, users.findCompany);
 
     // Delete a User with userId
     router.delete('/users/:userId', authentication.isAuthorizedToDeleteUser, users.delete);
