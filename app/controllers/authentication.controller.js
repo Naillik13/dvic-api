@@ -126,7 +126,8 @@ exports.signIn = (req, res) => {
             let token = jwt.sign({"email": user.email}, privateKey, {algorithm: 'HS256'});
             res.send({
                 token: token,
-                userId: user._id
+                userId: user._id,
+                companyId: user.company
             });
         }).catch((error) =>  {
             console.log(error);

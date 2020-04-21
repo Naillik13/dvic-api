@@ -15,5 +15,7 @@ router.use(allowCrossDomain);
 require('./authentication.routes.js')(router);
 require('./user.routes')(router);
 require('./company.routes')(router);
+require('./projectType.routes')(router);
+require('./client.routes')(router);
 
 module.exports = router;
