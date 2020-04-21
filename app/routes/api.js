@@ -17,5 +17,6 @@ require('./user.routes')(router);
 require('./company.routes')(router);
 require('./projectType.routes')(router);
 require('./client.routes')(router);
+require('./project.routes')(router);
 
 module.exports = router;

@@ -1,10 +1,11 @@
 module.exports = (router) => {
     const projectTypes = require('../controllers/projectType.controller');
+    const authentication = require("../controllers/authentication.controller");
 
-    router.get('/project-types', projectTypes.findAll);
+    router.get('/project-types', authentication.isAdmin, projectTypes.findAll);
 
-    router.post('/project-types', projectTypes.create);
+    router.post('/project-types', authentication.isAuthenticated, projectTypes.create);
 
-    router.get('/companies/:companyId/project-types', projectTypes.findByCompany);
+    router.get('/companies/:companyId/project-types', authentication.isAuthenticated, projectTypes.findByCompany);
 
 };

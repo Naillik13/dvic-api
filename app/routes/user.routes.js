@@ -5,7 +5,7 @@ module.exports = (router) => {
     // Create a new User
     router.post('/users', users.create);
 
-    router.get('/users', users.findAll);
+    router.get('/users', authentication.isAdmin, users.findAll);
 
     // Retrieve a single User with userId
     router.get('/users/:userId', authentication.isAuthenticated, users.findOne);

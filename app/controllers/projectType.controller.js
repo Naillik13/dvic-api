@@ -42,7 +42,7 @@ exports.findAll = (req, res) => {
         return res.send(projectTypes);
     }).catch(err => {
         return res.status(500).send({
-            message: err.message || "Some error occurred while retrieving companies."
+            message: err.message || "Some error occurred while retrieving projectTypes."
         });
     });
 };
