@@ -7,7 +7,15 @@ exports.create = (req, res) => {
         return res.status(400).send({
             message: "Project name can not be empty."
         });
-    } else if (!req.body.company) {
+    } else if (!req.body.client) {
+        return res.status(400).send({
+            message: "Project client can not be empty."
+        });
+    } else if (!req.body.type) {
+        return res.status(400).send({
+            message: "Project type can not be empty."
+        });
+    } else if (!req.body.client) {
         return res.status(400).send({
             message: "Project company can not be empty."
         });
@@ -18,6 +26,7 @@ exports.create = (req, res) => {
         description: req.body.description,
         duration: req.body.duration,
         type: mongoose.Types.ObjectId(req.body.type),
+        client: mongoose.Types.ObjectId(req.body.client),
         company: mongoose.Types.ObjectId(req.body.company)
     });
 
@@ -42,7 +51,7 @@ exports.findAll = (req, res) => {
 
 exports.findByCompany = (req, res) => {
     const query = {company: mongoose.Types.ObjectId(req.params.companyId)};
-    Project.find(query).then(projectTypes => {
+    Project.find(query).populate({path: "type"}).populate({path: "client"}).then(projectTypes => {
         return res.send(projectTypes);
     }).catch(err => {
         return res.status(500).send({

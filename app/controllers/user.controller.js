@@ -1,8 +1,11 @@
 const User = require('../models/user.model.js');
 const Company = require('../models/company.model');
 const jwt = require('jsonwebtoken');
+const fs = require('fs');
 const UserService = require('../services/user.service');
 const bcrypt = require('bcrypt');
+
+const privateKey = fs.readFileSync('././private.pem', 'utf8');
 
 // Create and Save a new User
 exports.create = (req, res) => {
