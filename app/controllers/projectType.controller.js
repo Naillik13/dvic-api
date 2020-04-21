@@ -46,3 +46,14 @@ exports.findAll = (req, res) => {
         });
     });
 };
+
+exports.findByCompany = (req, res) => {
+    const query = {company: mongoose.Types.ObjectId(req.params.companyId)};
+    ProjectType.find(query).then(projectTypes => {
+        return res.send(projectTypes);
+    }).catch(err => {
+        return res.status(500).send({
+            message: err.message || "Some error occurred while retrieving projectTypes."
+        });
+    });
+};

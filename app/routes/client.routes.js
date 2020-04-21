@@ -5,4 +5,5 @@ module.exports = (router) => {
 
     router.post('/clients', clients.create);
 
+    router.get('/companies/:companyId/clients', clients.findByCompany);
 };

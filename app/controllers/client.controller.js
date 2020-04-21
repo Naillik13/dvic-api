@@ -63,3 +63,14 @@ exports.findAll = (req, res) => {
         });
     });
 };
+
+exports.findByCompany = (req, res) => {
+    const query = {company: mongoose.Types.ObjectId(req.params.companyId)};
+    Client.find(query).then(clients => {
+        return res.send(clients);
+    }).catch(err => {
+        return res.status(500).send({
+            message: err.message || "Some error occurred while retrieving clients."
+        });
+    });
+};
